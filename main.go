@@ -41,7 +41,7 @@ func handUploadFile(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("Uploaded File: %+v\n", handler.Filename)
 	fmt.Printf("File Size: %+v\n", handler.Size)
 
-	tempFile, err := ioutil.TempFile("/tmp", handler.Filename)
+	tempFile, err := ioutil.TempFile("./", handler.Filename)
 	if err != nil {
 		fmt.Println("open temp file fail: ")
 		fmt.Println(err)
@@ -63,7 +63,7 @@ func handUploadFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, "./upload.html", 301)
+	http.Redirect(w, r, "./index.html", 301)
 }
 
 func main() {
