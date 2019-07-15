@@ -11,7 +11,7 @@ import (
 
 func handUploadFile(w http.ResponseWriter, r *http.Request) {
 	fileLenStr := r.Header.Get("content-length")
-	maxLen := 1024 * 1024 * 100
+	maxLen := 1024 * 1024 * 500
 	fileLen := maxLen
 	if len(fileLenStr) > 0 {
 		l, err := strconv.Atoi(fileLenStr)
@@ -59,6 +59,13 @@ func handUploadFile(w http.ResponseWriter, r *http.Request) {
 	_, err = tempFile.Write(buf)
 	if nil != err {
 		fmt.Println("write file err :")
+		fmt.Println(err)
+		return
+	}
+
+	err = os.Rename(tempFile.Name(), handler.Filename)
+	if nil != err {
+		fmt.Println("rename file err :")
 		fmt.Println(err)
 		return
 	}
